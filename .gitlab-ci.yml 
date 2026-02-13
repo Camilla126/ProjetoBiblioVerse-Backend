@@ -1,0 +1,12 @@
+stages:
+  - test
+
+test:
+  stage: test
+  image: ruby:3.3 # Use a versão do Ruby compatível com seu projeto
+  before_script:
+    - apt-get update -qq && apt-get install -y build-essential libpq-dev # Instala dependências do sistema
+    - gem install bundler
+    - bundle install
+  script:
+    - bin/ci
