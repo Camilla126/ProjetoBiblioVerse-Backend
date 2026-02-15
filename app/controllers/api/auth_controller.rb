@@ -12,7 +12,7 @@ class Api::AuthController < ApplicationController
     end
   end
 
-  def me
+  def userAuth
     user = current_user
     render json: user
   end
