@@ -34,3 +34,7 @@
 /config/*.key
 
 /firebase-key.json
+
+firebase-key.json
+.env
+.env.*
