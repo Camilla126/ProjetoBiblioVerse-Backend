@@ -1,24 +1,39 @@
+require_relative '../application_controller' # <-- ADICIONE ISSO AQUI
+
 class Api::UsersController < ApplicationController
-  before_action :authenticate_user!
+  # Adicionamos o 'raise: false' para evitar o erro de "not defined"
+  skip_before_action :authenticate_user!, only: [:create], raise: false
+  before_action :authenticate_user!, only: [:show, :update], raise: false
+
+  def create
+    user = User.new(user_params_create)
+    if user.save
+      token = JwtService.encode(user_id: user.id)
+      render json: { token: token, user: user.as_json(only: [:id, :name, :email]) }, status: :created
+    else
+      render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
 
   def show
-    user = User.find(params[:id])
-    render json: user
+    render json: current_user.as_json(only: [:id, :name, :email])
   end
 
   def update
-    user = User.find(params[:id])
-
-    if user.update(user_params)
-      render json: user
+    if current_user.update(user_params_update)
+      render json: current_user
     else
-      render json: user.errors, status: :unprocessable_entity
+      render json: current_user.errors, status: :unprocessable_entity
     end
   end
 
   private
 
-  def user_params
+  def user_params_create
+    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def user_params_update
     params.require(:user).permit(:name, :email)
   end
 end

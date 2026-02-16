@@ -8,7 +8,7 @@ gem "rails", "~> 8.1.2"
 # gem "stimulus-rails" # Removido: frontend
 # gem "jbuilder" # Removido: não usar builder de views
 # gem "redis", ">= 4.0.1" # Comente/descomente conforme uso
-# gem "bcrypt", "~> 3.1.7" # Comente/descomente conforme uso
+gem "bcrypt", "~> 3.1.7" # Comente/descomente conforme uso
 
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
@@ -38,3 +38,10 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 end
+
+# Gemfile
+gem "puma", "~> 6.0"
+
+gem "rack-cors"
+
+gem "jwt"
