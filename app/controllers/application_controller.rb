@@ -8,7 +8,7 @@ class ApplicationController < ActionController::API
     
     begin
       # Aqui ele vai tentar decodificar o token
-      decoded = JwtService.decode(header)
+      decoded = Authentication::JwtService.decode(header)
       @current_user = User.find(decoded[:user_id])
     rescue ActiveRecord::RecordNotFound, JWT::DecodeError
       render json: { errors: ['Não autorizado'] }, status: :unauthorized

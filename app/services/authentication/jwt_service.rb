@@ -1,3 +1,4 @@
+module Authentication
 class JwtService
   SECRET_KEY = Rails.application.credentials.secret_key_base || 'chave_mestra_secreta'
 
@@ -12,4 +13,5 @@ class JwtService
   rescue
     nil
   end
+end
 end

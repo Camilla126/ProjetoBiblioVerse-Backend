@@ -1,11 +1,21 @@
-# Remova o ".config" desta linha
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-    resources :users, only: [:create, :show, :update]
-    
-    post 'auth/login', to: 'auth#login'
-    get 'auth/user', to: 'auth#userAuth'
-    delete 'auth/logout', to: 'auth#logout'
+      
+      # Rotas de Autenticação (Login, Registro, Logout)
+      namespace :authentication do
+        post 'login', to: 'login#create'
+        post 'register', to: 'register#create'
+        delete 'logout', to: 'logout#destroy'
+      end
+
+      # Rotas de Usuário (Perfil)
+      namespace :users do
+        # get 'profile', to: 'profile#show'
+        # patch 'profile', to: 'profile#update'
+        resource :profile, only: [:show, :update], controller: 'profile'
+      end
+
+    end
   end
 end
